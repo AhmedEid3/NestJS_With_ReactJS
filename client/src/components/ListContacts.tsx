@@ -8,6 +8,7 @@ import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/Inbox';
 
 import useContacts from '../hooks/useContacts';
+import { Fragment } from 'react';
 
 export default function ListContacts() {
   const { contacts } = useContacts();
@@ -16,14 +17,34 @@ export default function ListContacts() {
     <Box sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
       <List>
         {contacts.map((c: any) => (
-          <ListItem key={c.id} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                <InboxIcon />
-              </ListItemIcon>
-              <ListItemText primary={c.name} />
-            </ListItemButton>
-          </ListItem>
+          <Fragment key={c.id}>
+            <ListItem disablePadding>
+              <ListItemButton>
+                <ListItemIcon>
+                  <InboxIcon />
+                </ListItemIcon>
+                <ListItemText primary={c.email} />
+              </ListItemButton>
+            </ListItem>
+
+            <ListItem disablePadding>
+              <ListItemButton>
+                <ListItemIcon>
+                  <InboxIcon />
+                </ListItemIcon>
+                <ListItemText primary={c.address} />
+              </ListItemButton>
+            </ListItem>
+
+            <ListItem disablePadding>
+              <ListItemButton>
+                <ListItemIcon>
+                  <InboxIcon />
+                </ListItemIcon>
+                <ListItemText primary={c.slogan} />
+              </ListItemButton>
+            </ListItem>
+          </Fragment>
         ))}
       </List>
     </Box>

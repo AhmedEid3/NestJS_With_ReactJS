@@ -127,7 +127,7 @@ const Layout: React.FC<PropsWithChildren> = () => {
             <MenuIcon />
           </IconButton>
 
-          <Button component={RouterLink} to={NavRoutes.homeLink}>
+          <Button sx={{ p: 0 }} component={RouterLink} to={NavRoutes.homeLink}>
             <Box sx={{ width: '4rem' }} component="img" src={logo} alt="logo" />
           </Button>
         </Toolbar>

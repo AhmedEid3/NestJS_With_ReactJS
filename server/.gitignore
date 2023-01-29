@@ -3,6 +3,7 @@
 /dist_client
 /node_modules
 server-*.*
+docker-compose.yml
 
 # Logs
 logs

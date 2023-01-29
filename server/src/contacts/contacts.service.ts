@@ -1,30 +1,43 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { CreateContactDto } from './dto/create-contact.dto';
 import { UpdateContactDto } from './dto/update-contact.dto';
+import { Contact } from './entities/contact.entity';
 
 @Injectable()
 export class ContactsService {
-  create(createContactDto: CreateContactDto) {
-    return 'This action adds a new contact';
+  constructor(
+    @InjectRepository(Contact)
+    private readonly contactRepository: Repository<Contact>,
+  ) {}
+
+  async create(createContactDto: CreateContactDto) {
+    const contact = this.contactRepository.create(createContactDto);
+    return this.contactRepository.save(contact);
   }
 
-  findAll() {
-    return [
-      { id: 1, name: 'Ahmed' },
-      { id: 2, name: 'Eid' },
-      { id: 3, name: 'Mohamed' },
-    ];
+  async findAll() {
+    return this.contactRepository.find({ order: { createdAt: 'ASC' } });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} contact`;
+  async findOne(id: number) {
+    const contact = await this.contactRepository.findOneBy({ id });
+    if (!contact) throw new BadRequestException(`Contact #${id} not found`);
+    return contact;
   }
 
-  update(id: number, updateContactDto: UpdateContactDto) {
-    return `This action updates a #${id} contact`;
+  async update(id: number, updateContactDto: UpdateContactDto) {
+    const contact = await this.contactRepository.preload({
+      id,
+      ...updateContactDto,
+    });
+    if (!contact) throw new BadRequestException(`Contact #${id} not found`);
+    return this.contactRepository.save(contact);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} contact`;
+  async remove(id: number) {
+    const contact = await this.findOne(id);
+    return this.contactRepository.remove(contact);
   }
 }
