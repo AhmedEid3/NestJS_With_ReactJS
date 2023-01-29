@@ -3,3 +3,6 @@
 /test
 nest-cli.json
 tsconfig.*
+.eslintrc.*
+.prettierrc
+server-*.*
