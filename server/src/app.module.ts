@@ -18,7 +18,7 @@ import { ContactsModule } from './contacts/contacts.module';
       host: 'localhost',
       port: 5432,
       username: 'postgres',
-      password: 'pass#@!Mila123!@#',
+      password: 'pass123', // Type Password here exact to docker-compose.yml
       autoLoadEntities: true,
       synchronize: true, // only in development, disable it in production
     }),
